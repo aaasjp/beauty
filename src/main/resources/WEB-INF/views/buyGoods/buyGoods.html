@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+    <form class="layui-form" id="adminform" action="${base}/buyGoods/buy">
+		<input name="userId" value="${userId}" type="hidden" />
+		<div style="margin-left: 145px;margin-top: 15px; margin-bottom: 15px;">
+			<div class="layui-btn layui-btn-normal buy" id="" style=" min-width: 150px;">选择产品</div>
+		</div>
+			<table class="layui-table layui-table-add" lay-skin="nob">
+		  <tbody id="content">
+		 <!-- <tr>  <td>
+			  <input type="hidden" name="goodsId" />
+			  <input type="text"  placeholder="产品名称" autocomplete="off" class="layui-input">
+		  </td>
+			  <td>
+				  <input type="number" name="num"  placeholder="件数" autocomplete="off" class="layui-input">
+			  </td>
+			  <td>
+				  <div class="layui-btn layui-btn-danger del" style=" min-width: 150px;">删除</div>
+			  </td>
+		  </tr>-->
+		  </tbody>
+		</table>
+		<div style="margin-left: 145px; margin-bottom: 15px;">	
+			<div class="layui-btn" id="adminBut" style=" min-width: 150px;">确定</div>
+		</div>
+	</form>
+
+	<script type="text/javascript" src="${base}/static/layui/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+	<script type="text/javascript" src="${base}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${base}/static/js/util.js"></script>
+	<script>
+        $("#adminBut").click(function() {
+          $("#adminform").ajaxSubmit({
+                clearForm: false,
+                dataType: "JSON",
+                success: function(data) {
+                    if(data.code==200){
+                        layer.msg('购买成功！',{time: 2000});
+                        closeThisWindowAndParentReload(1500);
+                    }else if(data.code==301){
+                        layer.msg(data.message,{time: 2000});
+                      /*  closeThisWindowAndParentReload(1500);*/
+					}else{
+                        layer.msg(data.message,{time: 2000});
+					}
+                },
+                error: function(){
+                    layer.msg('添加失败！',{time: 1000});
+				}
+        });
+        });
+		layui.use(['jquery','form','upload','layer'], function(){
+            var $ = layui.jquery
+                ,layer = layui.layer
+                ,form = layui.form();
+
+            $("#adminform").submit(function(e){
+                layui.upload({
+                    url: ''
+                    ,success: function(res){
+                        console.log(res); //上传成功返回值，必须为json格式
+                    }
+                });
+            });
+
+			layer.photos({
+			  photos: '#layer-photos-demo'
+			  ,closeBtn: 1
+			  ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+			});
+
+
+            // 购买产品
+            $(document).on("click", ".buy", function() {
+                var id=this.id;
+                layer.open({
+                    type:2
+                    ,area:['100%', '90%']
+                    ,title:"双击选择产品"
+                    ,content: '${base}/goods/goodsList'
+                });
+            });
+
+            //删除
+            $(document).on("click", ".del", function() {
+                var obj=this.parentNode.parentNode;
+                $(obj).empty();
+              //  .removeChild( this.parentNode);
+
+            });
+
+		});
+	</script>
+</body>
+</html>

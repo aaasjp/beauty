@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.BuyVipCardMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.BuyVipCard" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="vipCardId" property="vipCardId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="available" property="available" jdbcType="REAL" />
+    <result column="remainder" property="remainder" jdbcType="REAL" />
+    <result column="vipCardSnapshot" property="vipCardSnapshot" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="personId" property="personId" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="payType" property="payType" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="INTEGER" />
+    <result column="operatorId" property="operatorId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, vipCardId, price,available,remainder, vipCardSnapshot, createDate, num, state, updateDate, personId,memo,payType,type,userId,personId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from buyVipCard
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from buyVipCard
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zzq.beauty.model.BuyVipCard" >
+    insert into buyVipCard (id, vipCardId, price, available,remainder,
+      vipCardSnapshot, createDate, num,
+      state, updateDate, personId,memo,payType,type,userId,operatorId
+      )
+    values (#{id,jdbcType=INTEGER}, #{vipCardId,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{available,jdbcType=REAL},
+      #{remainder,jdbcType=REAL}, #{vipCardSnapshot,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{num,jdbcType=INTEGER},
+      #{state,jdbcType=INTEGER}, #{updatedate,jdbcType=TIMESTAMP}, #{personId,jdbcType=INTEGER},#{memo,jdbcType=VARCHAR},#{payType,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{operatorId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.BuyVipCard" >
+    insert into buyVipCard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="vipCardId != null" >
+        vipCardId,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="available != null" >
+        available,
+      </if>
+      <if test="remainder != null" >
+        remainder,
+      </if>
+      <if test="vipCardSnapshot != null" >
+        vipCardSnapshot,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+      <if test="personId != null" >
+        personId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="vipCardId != null" >
+        #{vipCardId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=REAL},
+      </if>
+      <if test="remainder != null" >
+        #{remainder,jdbcType=REAL},
+      </if>
+      <if test="vipCardSnapshot != null" >
+        #{vipCardSnapshot,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personId != null" >
+        #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzq.beauty.model.BuyVipCard" >
+    update buyVipCard
+    <set >
+      <if test="vipCardId != null" >
+        vipCardId = #{vipCardId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="available != null" >
+        available = #{available,jdbcType=REAL},
+      </if>
+      <if test="remainder != null" >
+        remainder = #{remainder,jdbcType=REAL},
+      </if>
+      <if test="vipCardSnapshot != null" >
+        vipCardSnapshot = #{vipCardSnapshot,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personId != null" >
+        personId = #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        payType = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        userId = #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        operatorId = #{operatorId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.BuyVipCard" >
+    update buyVipCard
+    set vipCardId = #{vipCardId,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL},
+      available = #{available,jdbcType=REAL},
+      remainder = #{remainder,jdbcType=REAL},
+      vipCardSnapshot = #{vipCardSnapshot,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      num = #{num,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      personId = #{personId,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      payType = #{payType,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=INTEGER},
+      operatorId = #{operatorId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="buyVipCardList" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT buyVipCard.id,person.`name` AS userName,vipCard.`name` AS vipCardName,buyVipCard.price,buyVipCard.available,buyVipCard.remainder,buyVipCard.vipCardSnapshot,buyVipCard.createDate,buyVipCard.num,buyVipCard.state,buyVipCard.memo,buyVipCard.payType,buyVipCard.type,buyVipCard.userId,buyVipCard.operatorId
+    FROM buyVipCard,person,vipCard WHERE  buyVipCard.personId=person.id AND vipCard.id=buyVipCard.vipCardId
+    AND  (person.`name` LIKE #{keyWord} OR vipCard.`name` LIKE #{keyWord} ) ORDER BY buyVipCard.createDate DESC
+  </select>
+
+  <select id="getBuyVipCardInUse" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    SELECT buyVipCard.id,buyVipCard.price,buyVipCard.available,buyVipCard.remainder,buyVipCard.vipCardSnapshot,vipCard.`name`,buyVipCard.userId,buyVipCard.operatorId  FROM buyVipCard,vipCard WHERE buyVipCard.vipCardId=vipCard.id AND buyVipCard.personId=#{personId} AND buyVipCard.state=1
+  </select>
+
+  <select id="getCareBuyVipCard" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT buyVipCard.vipCardSnapshot,(SELECT vipCard.`name` FROM vipCard WHERE vipCard.id=buyVipCard.vipCardId) AS vipCardName FROM buyVipCard WHERE buyVipCard.id in (#{vipCardIds})
+  </select>
+
+  <select id="getSales" resultType="java.util.HashMap">
+    SELECT buyVipCard.id,person.`name` AS userName,buyVipCard.price,buyVipCard.available,buyVipCard.remainder,buyVipCard.vipCardSnapshot,buyVipCard.createDate,buyVipCard.num,buyVipCard.state,buyVipCard.memo,buyVipCard.payType,buyVipCard.type,buyVipCard.userId,buyVipCard.operatorId
+    FROM buyVipCard,person WHERE  buyVipCard.personId=person.id
+    AND (buyVipCard.createDate &gt;= #{startDate}  AND buyVipCard.createDate &lt;= #{endDate} ) AND  person.`name` LIKE #{keyWord}
+    ORDER BY buyVipCard.createDate DESC
+  </select>
+
+  <select id="getSale" resultType="java.lang.Double">
+    SELECT IFNULL(SUM(price),0) FROM buyVipCard WHERE buyVipCard.createDate &gt;= #{startDate} AND buyVipCard.createDate &lt;= #{endDate}
+  </select>
+  <select id="getSaleVipCardNum" resultType="java.lang.Long">
+    SELECT IFNULL(SUM(num),0) FROM buyVipCard WHERE buyVipCard.createDate &gt;= #{startDate} AND buyVipCard.createDate &lt;= #{endDate}
+  </select>
+</mapper>

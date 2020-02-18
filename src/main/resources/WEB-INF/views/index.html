@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+<div class="container">
+    <blockquote class="layui-elem-quote"><span style="color:#FF5722">${session.user.name} </span>
+        <p>管理平台欢迎您！</p></blockquote>
+
+
+    <!--private Float cashSumOfKaidan;
+    private Float vipCardSumOfKaidan;
+    private Float cashSumOfBanka;
+    private Float cashSumOfXuka;
+    private Float totalCash;
+    private Float totalVipCard;
+    private Integer sumOfnewCustomer;
+    private Integer sumOfoldCustomer;-->
+
+    <fieldset class="layui-elem-field site-demo-button">
+        <legend>当日统计</legend>
+        <div class="layui-form">
+            <table class="layui-table" border="1">
+                <tbody>
+                <tr style="text-align: center;">
+                    <td colspan="2" style="font-size: 17px">开单</td>
+                    <td style="font-size: 17px">办卡</td>
+                    <td style="font-size: 17px">续卡</td>
+                    <td colspan="2" style="font-size: 17px">总计</td>
+                    <td colspan="2" style="font-size: 17px">客数</td>
+                </tr>
+                <tr style="text-align: center;">
+                    <td>现金</td>
+                    <td>划卡</td>
+                    <td>现金</td>
+                    <td>现金</td>
+                    <td>现金</td>
+                    <td>划卡</td>
+                    <td>新客</td>
+                    <td>老客</td>
+                </tr>
+                <tr style="text-align: center;color: red;">
+                    <td>${curDayStatistic.cashSumOfKaidan}</td>
+                    <td>${curDayStatistic.vipCardSumOfKaidan}</td>
+                    <td>${curDayStatistic.cashSumOfBanka}</td>
+                    <td>${curDayStatistic.cashSumOfXuka}</td>
+                    <td>${curDayStatistic.totalCash}</td>
+                    <td>${curDayStatistic.totalVipCard}</td>
+                    <td>${curDayStatistic.sumOfnewCustomer}</td>
+                    <td>${curDayStatistic.sumOfoldCustomer}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+    <fieldset class="layui-elem-field site-demo-button">
+        <legend>当周统计</legend>
+        <div class="layui-form">
+            <table class="layui-table" border="1">
+                <tbody>
+                <tr style="text-align: center;">
+                    <td colspan="2" style="font-size: 17px">开单</td>
+                    <td style="font-size: 17px">办卡</td>
+                    <td style="font-size: 17px">续卡</td>
+                    <td colspan="2" style="font-size: 17px">总计</td>
+                    <td colspan="2" style="font-size: 17px">客数</td>
+                </tr>
+                <tr style="text-align: center;">
+                    <td>现金</td>
+                    <td>划卡</td>
+                    <td>现金</td>
+                    <td>现金</td>
+                    <td>现金</td>
+                    <td>划卡</td>
+                    <td>新客</td>
+                    <td>老客</td>
+                </tr>
+                <tr style="text-align: center;color: red;">
+                    <td>${curWeekStatistic.cashSumOfKaidan}</td>
+                    <td>${curWeekStatistic.vipCardSumOfKaidan}</td>
+                    <td>${curWeekStatistic.cashSumOfBanka}</td>
+                    <td>${curWeekStatistic.cashSumOfXuka}</td>
+                    <td>${curWeekStatistic.totalCash}</td>
+                    <td>${curWeekStatistic.totalVipCard}</td>
+                    <td>${curWeekStatistic.sumOfnewCustomer}</td>
+                    <td>${curWeekStatistic.sumOfoldCustomer}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field site-demo-button">
+        <legend>当月统计</legend>
+        <div class="layui-form">
+            <table class="layui-table" border="1">
+                <tbody>
+                <tr style="text-align: center;">
+                    <td colspan="2" style="font-size: 17px">开单</td>
+                    <td style="font-size: 17px">办卡</td>
+                    <td style="font-size: 17px">续卡</td>
+                    <td colspan="2" style="font-size: 17px">总计</td>
+                    <td colspan="2" style="font-size: 17px">客数</td>
+                </tr>
+                <tr style="text-align: center;">
+                    <td>现金</td>
+                    <td>划卡</td>
+                    <td>现金</td>
+                    <td>现金</td>
+                    <td>现金</td>
+                    <td>划卡</td>
+                    <td>新客</td>
+                    <td>老客</td>
+                </tr>
+                <tr style="text-align: center;color: red;">
+                    <td>${curMonthStatistic.cashSumOfKaidan}</td>
+                    <td>${curMonthStatistic.vipCardSumOfKaidan}</td>
+                    <td>${curMonthStatistic.cashSumOfBanka}</td>
+                    <td>${curMonthStatistic.cashSumOfXuka}</td>
+                    <td>${curMonthStatistic.totalCash}</td>
+                    <td>${curMonthStatistic.totalVipCard}</td>
+                    <td>${curMonthStatistic.sumOfnewCustomer}</td>
+                    <td>${curMonthStatistic.sumOfoldCustomer}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+
+    <div id="main" style="width: 100%;height:400px;"></div>
+
+</div>
+
+<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+<script type="text/javascript" src="${base}/static/js/echarts.common.min.js"></script>
+<script>
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var option = {
+        title: {
+            text: '折线图堆叠'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '邮件营销',
+                type: 'line',
+                stack: '总量',
+                data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name: '联盟广告',
+                type: 'line',
+                stack: '总量',
+                data: [220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name: '视频广告',
+                type: 'line',
+                stack: '总量',
+                data: [150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name: '直接访问',
+                type: 'line',
+                stack: '总量',
+                data: [320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name: '搜索引擎',
+                type: 'line',
+                stack: '总量',
+                data: [820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
+
+    /*myChart.setOption(option);*/
+</script>
+
+</body>
+</html>

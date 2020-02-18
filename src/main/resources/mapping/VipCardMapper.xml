@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.VipCardMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.VipCard" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="available" property="available" jdbcType="REAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, num, price,available,description,state,createDate, updateDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vipCard
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vipCard
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zzq.beauty.model.VipCard" >
+    insert into vipCard (id, name, num,
+      price,available,description, createDate, updateDate,state
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER},
+      #{price,jdbcType=REAL}, #{available,jdbcType=REAL},#{description,jdbcType=VARCHAR},#{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.VipCard" >
+    insert into vipCard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="available != null" >
+        available,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=REAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzq.beauty.model.VipCard" >
+    update vipCard
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="available != null" >
+        available = #{available,jdbcType=REAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state= #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.VipCard" >
+    update vipCard
+    set name = #{name,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL},
+      available = #{available,jdbcType=REAL},
+      description = #{description,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP},
+    state= #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="vipCardList" resultMap="BaseResultMap" >
+    select * from vipCard where 1=1 and name like #{keyWord} and state=1
+    <if test="where != null">
+      ${where}
+    </if>
+
+    order by createDate DESC
+  </select>
+  
+  <select id="dropOffVipCardList"  resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from vipCard where 1=1 and name like #{keyWord} and state=0 order by createDate DESC
+  </select>
+
+  <update id="reduceInventory">
+        update vipCard set num=num-#{num} where id=#{id}
+  </update>
+</mapper>

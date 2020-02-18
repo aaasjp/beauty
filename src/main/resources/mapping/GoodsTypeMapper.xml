@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.GoodsTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.GoodsType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="goodsTypeList" resultMap="BaseResultMap" >
+    select * from goodsType where 1=1  and state=1
+    order by createDate DESC
+  </select>
+
+</mapper>

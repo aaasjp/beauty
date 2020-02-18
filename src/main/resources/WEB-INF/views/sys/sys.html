@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+    <form class="layui-form" action="${base}/sys/update" method="post">
+		<fieldset class="layui-elem-field layui-field-title mtb10">
+			<legend>首页统计</legend>
+		</fieldset>
+		<table class="layui-table layui-table-add" lay-skin="nob">
+			<tbody>
+			<tr>
+				<th width="150">统计近期天数</th>
+				<td>
+					<input type="number" name="indexStatistics"  value="${indexStatistics}" min="1" autocomplete="off" class="layui-input w120"> 天<span class="red">(最低1天)</span>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<!--<fieldset class="layui-elem-field layui-field-title mtb10">
+		  <legend>长时间未护理参数设置</legend>
+		</fieldset>
+	    <table class="layui-table layui-table-add" lay-skin="nob">
+		  <tbody>
+		    <tr>
+		      <th width="150">超期未护理提醒</th>
+		      <td>
+		        	<input type="number" name="dontCareByDay" value="${dontCareByDay}" min="1" autocomplete="off" class="layui-input w120"> 天 <span class="red">(最低1天)</span>
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>-->
+
+		<fieldset class="layui-elem-field layui-field-title mtb10">
+		  <legend>库存剩余预警</legend>
+		</fieldset>
+	    <table class="layui-table layui-table-add" lay-skin="nob">
+		  <tbody>
+		    <tr>
+		      <th width="150">库存阈值</th>
+		      <td>
+		        	<input type="number" name="inventoryWarning" value="${inventoryWarning}" min="1" autocomplete="off" class="layui-input w120"> 件 <span class="red">(最低1件)</span>
+		      </td>
+		    </tr>
+		  </tbody>
+        </table>
+		<div style="margin-left: 195px; margin-bottom: 15px;">	
+			<button class="layui-btn  layui-btn-big" type="submit" style=" min-width: 150px;">保 存</button>
+		</div>
+	</form>
+	
+	<script type="text/javascript" src="layui/layui.js"></script>
+	<script>
+		layui.use(['jquery','form'], function(){
+			var $ = layui.jquery; 
+		});
+	</script>
+</body>
+</html>

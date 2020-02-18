@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+	<div class="container">
+		<div class="content-search">
+			<form class="layui-form layui-form-pane" action="${base}/buyVipCard/buyVipCardList">
+				<div class="layui-inline">
+					<label class="layui-form-label" >会员卡/客户</label>
+					<div class="layui-input-block">
+						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="会员卡名称/客户姓名" class="layui-input" type="text"/>
+					</div>
+				</div>
+
+				<div class="layui-inline"><button class="layui-btn" lay-submit="" type="submit">查询</button></div>
+			</form>
+		</div>
+		<div class="tar mt10">
+			<!--<button class="layui-btn layui-btn-normal layui-btn-small add">+添加会员卡</button>-->
+		</div>
+		<div class="table-listm roll-x">
+			<table class="layui-table" lay-skin="line">
+			  <thead>
+			    <tr>
+			        <th>会员卡名</th>
+					<th>价格</th>
+					<th>会员卡初始额度</th>
+					<th>剩余可用金额</th>
+					<th>买入件数</th>
+					<th>备注</th>
+			        <th>购买时间</th>
+					<th>状态</th>
+					<th>购买人</th>
+			      <th>操作</th>
+			    </tr> 
+			  </thead>
+			  <tbody>
+			  <% for(buyVipCard in list){%>
+			    <tr>
+			        <td>${buyVipCard.vipCardName}</td>
+			        <td>${buyVipCard.price}</td>
+					<td>${buyVipCard.available}</td>
+					<td>${buyVipCard.remainder}</td>
+					<td>${buyVipCard.num}</td>
+					<td>${buyVipCard.memo}</td>
+			        <td>${buyVipCard.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+					<td>${buyVipCard.state==1?"正常":"已注销"}</td>
+					<td>${buyVipCard.userName}</td>
+					<!--<td>${vipCardJSONFormat(buyVipCard.vipCardSnapshot,1)}</td>-->
+
+			      <td>
+					  <%if(buyVipCard.state==0){%>
+					  <button class="layui-btn layui-btn-warm layui-btn-small active" id="${buyVipCard.id}">激活</button>
+					  <%}else{%>
+					  <button class="layui-btn layui-btn-warm layui-btn-small renew" id="${buyVipCard.id}">续卡</button>
+					  <button class="layui-btn layui-btn-warm layui-btn-small end" id="${buyVipCard.id}">注销</button>
+					  <%}%>
+
+			      </td>
+			    </tr>
+			  <%}%>
+			  </tbody>
+			</table>   
+		</div>
+	</div>
+	<div id="table-pages" style="text-align:center"></div>
+	<script type="text/javascript" src="${base}/static/layui/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+	<script type="text/javascript" src="${base}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${base}/static/js/util.js"></script>
+
+    <script>
+        //双击操作，给父页面传值
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        function buyVipCard(id,name,num) {
+            parent.document.getElementById("content").innerHTML+=" <tr>  <td>\n" +
+                " <input type=\"hidden\" name=\"vipCardId\" value='"+id+"' />\n" +
+                " <input type=\"text\"  placeholder=\"会员卡名称\" value='"+name+"'  autocomplete=\"off\" class=\"layui-input\">\n" +
+                "	</td>\n" +
+                /*"	<td>\n" +
+                "		<input type=\"number\" name=\"num\" value='1'  placeholder=\"件数\" max='"+num+"' min='0' autocomplete=\"off\" class=\"layui-input\">\n" +
+                "		</td>\n" +*/
+                "<td>\n" +
+            "				  <div class=\"layui-btn layui-btn-danger del\" style=\" min-width: 150px;\">删除</div>\n" +
+            "			  </td></tr>";
+            parent.layer.close(index);
+        }
+
+		function end(id) {
+            $.ajax({
+                type : "POST", //提交方式
+                url : "${base}/buyVipCard/end",//路径
+                data : {
+                    "id" : id
+                },//数据，这里使用的是Json格式进行传输
+                success : function(data) {//返回数据根据结果进行相应的处理
+                    if(data.code==200){
+                        layer.msg('操作成功！',{time: 2000});
+
+                    }else{
+                        layer.msg(data.message,{time: 2000});
+                    }
+                }
+            });
+        }
+
+        function active(id) {
+            $.ajax({
+                type : "POST", //提交方式
+                url : "${base}/buyVipCard/active",//路径
+                data : {
+                    "id" : id
+                },//数据，这里使用的是Json格式进行传输
+                success : function(data) {//返回数据根据结果进行相应的处理
+                    if(data.code==200){
+                        layer.msg('操作成功！',{time: 2000});
+
+                    }else{
+                        layer.msg(data.message,{time: 2000});
+                    }
+                }
+            });
+        }
+
+        
+		layui.use(['jquery', 'laydate','form','layer','laypage'], function(){
+
+			var $ = layui.jquery,
+			    laydate = layui.laydate,
+			    layer = layui.layer,
+			    laypage = layui.laypage;
+
+			// 分页
+			 laypage({
+			    cont: 'table-pages'
+			    ,pages:${page.pages}
+			    ,skip: true
+				 ,curr:${page.pageNum}
+				,jump:function(e,first){
+                     if(!first){
+                         var myform=$('.layui-form'); //得到form对象
+                         var tmpInput=$("<input type='hidden' name='pageNum'/>");
+                         tmpInput.attr("value", e.curr);
+                         myform.append(tmpInput);
+                         myform.submit();
+                     }
+                 }
+             });
+
+
+			// 注销操作
+			$(document).on("click", ".end", function() {
+                var id=this.id;
+			    layer.open({
+			      title:"会员卡注销操作"
+				  ,content: '您确认该会员卡已经使用完了吗？一旦操作不可恢复！'
+				  ,btn: ['取消', '确认']
+				  ,yes: function(index, layero){
+				       layer.closeAll();
+				  }
+				  ,btn2: function(index, layero){
+                        end(id);
+                        thisWindowReload(1000);
+				  }
+				});
+			});
+
+            // 激活操作
+            $(document).on("click", ".active", function() {
+                var id=this.id;
+                layer.open({
+                    title:"会员卡激活操作"
+                    ,content: '您确认激活该会员卡吗？一旦操作不可恢复！'
+                    ,btn: ['取消', '确认']
+                    ,yes: function(index, layero){
+                        layer.closeAll();
+                    }
+                    ,btn2: function(index, layero){
+                        active(id);
+                        thisWindowReload(1000);
+                    }
+                });
+            });
+
+            // 会员卡续卡
+            $(document).on("click", ".renew", function() {
+                var id=this.id;
+                layer.open({
+                    type:2
+                    ,area:['80%', '90%']
+                    ,title:"会员卡续卡"
+                    ,content: '${base}/buyVipCard/renewVipCard?id='+id
+                });
+            });
+
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.PersonMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.Person" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="demand" property="demand" jdbcType="VARCHAR" />
+    <result column="personDesc" property="personDesc" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="lastCareDate" property="lastCareDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, birthday, sex, address, phone, userId, type, demand, personDesc, createDate, updateDate,lastCareDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from person
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from person
+    where userId = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from person
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zzq.beauty.model.Person" useGeneratedKeys="true" keyProperty="id" >
+    insert into person (id, name, birthday,
+      sex, address, phone, 
+      userId, type, demand,
+      personDesc, createDate, updateDate,lastCareDate
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=INTEGER},
+      #{sex,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{demand,jdbcType=VARCHAR},
+      #{personDesc,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP},#{lastCareDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.Person" keyProperty="id" useGeneratedKeys="true" >
+    insert into person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="demand != null" >
+        demand,
+      </if>
+      <if test="personDesc != null" >
+        personDesc,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+      <if test="lastCareDate != null" >
+        lastCareDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="demand != null" >
+        #{demand,jdbcType=VARCHAR},
+      </if>
+      <if test="personDesc != null" >
+        #{personDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCareDate != null" >
+        #{lastCareDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzq.beauty.model.Person" >
+    update person
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="demand != null" >
+        demand = #{demand,jdbcType=VARCHAR},
+      </if>
+      <if test="personDesc != null" >
+        personDesc = #{personDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCareDate != null" >
+        lastCareDate= #{lastCareDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.Person" keyProperty="id" useGeneratedKeys="true" >
+    update person
+    set name = #{name,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      demand = #{demand,jdbcType=VARCHAR},
+      personDesc = #{personDesc,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getPersonAndReCommender" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT
+    person.*, (
+    SELECT
+    p.`name`
+    FROM
+    person AS p
+    WHERE
+    p.id = person.userId
+    AND p.type = 0
+    ) AS userName
+    FROM
+    person
+    WHERE
+    person.type in (1,2)
+    AND
+    (
+    person.phone LIKE #{keyWord}
+    OR person.`name` LIKE #{keyWord}
+    )
+    <if test="where != null">
+      ${where}
+    </if>
+    order by person.createDate DESC
+  </select>
+
+  <select id="getSalesmanList" resultType="com.zzq.beauty.model.Person">
+    select person.id,person.name from person,user  where user.id=person.userId and  person.type=0 and user.state=1 order by person.createDate  asc
+  </select>
+
+</mapper>

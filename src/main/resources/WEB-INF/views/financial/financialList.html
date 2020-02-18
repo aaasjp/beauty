@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+	<div class="container">
+		<div class="content-search">
+			<form class="layui-form layui-form-pane" action="${base}/financial/sales">
+				<div class="layui-inline">
+					<label class="layui-form-label" >开始时间</label>
+					<div class="layui-input-block">
+						<input id="startDate" name="startDate" value="${startDate!}"  autocomplete="off" placeholder="点击选择开始时间" class="layui-input" type="text"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label" >结束时间</label>
+					<div class="layui-input-block">
+						<input id="endDate" name="endDate" value="${endDate!}"  autocomplete="off" placeholder="点击选择结束时间" class="layui-input" type="text"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label" >购买人</label>
+					<div class="layui-input-block">
+						<input  name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="购买人" class="layui-input" type="text"/>
+					</div>
+				</div>
+				<div class="layui-inline"><button class="layui-btn" lay-submit="" type="submit">查询</button></div>
+			</form>
+		</div>
+		<div class="tar mt10">
+			<!--<button class="layui-btn layui-btn-normal layui-btn-small add">+添加产品</button>-->
+		</div>
+		<div class="table-listm roll-x">
+			<table class="layui-table" lay-skin="line">
+			  <thead>
+			    <tr>
+					<th>客户</th>
+					<th>技师</th>
+			        <th>产品</th>
+					<th>消费金额</th>
+					<th>净收入</th>
+					<th>备注</th>
+					<th>类型</th>
+					<th>支付方式</th>
+					<th>操作人</th>
+					<th>创建时间</th>
+			    </tr> 
+			  </thead>
+			  <tbody>
+			  <% for(flowrecord in list){%>
+			  <tr>
+				  <td>${flowrecord.customer}</td>
+				  <td>${flowrecord.staff}</td>
+				  <td>${flowrecord.production}</td>
+				  <td>${flowrecord.amount}</td>
+				  <td>${flowrecord.income}</td>
+				  <td>${flowrecord.memo}</td>
+				  <td>${flowrecord.type}</td>
+				  <td>${flowrecord.payType}</td>
+				  <td>${flowrecord.operator}</td>
+				  <td>${flowrecord.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+			  </tr>
+			  <%}%>
+			  <tr style="color: red ">
+				  <td>合计（流水）：${sumAmount}</td>
+				  <td>合计（净流水）：${sumIncome}</td>
+			  </tr>
+			  </tbody>
+			</table>   
+		</div>
+	</div>
+	<div id="table-pages" style="text-align:center"></div>
+	<script type="text/javascript" src="${base}/static/layui/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+	<script type="text/javascript" src="${base}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${base}/static/js/util.js"></script>
+
+    <script>
+
+
+
+        
+
+        
+		layui.use(['jquery', 'laydate','form','layer','laypage'], function(){
+
+			var $ = layui.jquery,
+			    laydate = layui.laydate,
+			    layer = layui.layer,
+			    laypage = layui.laypage;
+
+			// 开始时间及截止时间
+			var start = {
+				choose: function(datas){
+					end.min = datas; //开始日选好后，重置结束日的最小日期
+					end.start = datas //将结束日的初始值设定为开始日
+				}
+			};
+
+			var end = {
+				choose: function(datas){
+					start.max = datas; //结束日选好后，重置开始日的最大日期
+				}
+			};
+
+			$('#startDate').click(function(){
+				start.elem = this;
+				laydate({
+					elem: this, //需显示日期的元素选择器
+					event: 'click', //触发事件
+					format: 'YYYY-MM-DD' //日期格式
+				});
+			});
+
+			$('#endDate').click(function(){
+				start.elem = this;
+				laydate({
+					elem: this, //需显示日期的元素选择器
+					event: 'click', //触发事件
+					format: 'YYYY-MM-DD' //日期格式
+				});
+			});
+
+			// 分页
+			 laypage({
+			    cont: 'table-pages'
+			    ,pages:${page.pages}
+			    ,skip: true
+				 ,curr:${page.pageNum}
+				 ,jump:function(e,first){
+                     if(!first){
+                         var myform=$('.layui-form'); //得到form对象
+                         var tmpInput=$("<input type='hidden' name='pageNum'/>");
+                         tmpInput.attr("value", e.curr);
+                         myform.append(tmpInput);
+                         myform.submit();
+                     }
+                 }
+             });
+
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+    <form class="layui-form" id="adminform" action="${base}/buyVipCard/renew">
+	    <table class="layui-table layui-table-add" lay-skin="nob">
+		  <tbody>
+
+		  <tr>
+			  <th><span class='red'>*</span>客户信息</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="customerInfo" value="${person.name!} ${person.phone}" placeholder="客户信息" autocomplete="off" class="layui-input" disabled="disabled">
+				  </div>
+			  </td>
+		  </tr>
+
+		  <tr>
+			  <input type="hidden" name="buyVipCardId" value="${buyVipCard.id!}" />
+		      <th width="100"><span class='red'>*</span>当前可用余额</th>
+		      <td>
+				  <div style="width:30%">
+				  <input type="text" name="remainder" value="${buyVipCard.remainder!}" placeholder="当前可用余额" autocomplete="off" class="layui-input" disabled="disabled" ></td>
+			</div>
+			</tr>
+
+		    <tr>
+		      <th><span class='red'>*</span>价格</th>
+		      <td>
+		        <div style="width:30%">
+		        	<input type="text" name="price" value="${buyVipCard.price!}" placeholder="会员卡价格" autocomplete="off" class="layui-input" disabled="disabled">
+		        </div>
+		      </td>
+		    </tr>
+
+		  <tr>
+			  <th><span class='red'>*</span>初始额度</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="available" value="${buyVipCard.available!}" placeholder="会员卡初始额度" autocomplete="off" class="layui-input" disabled="disabled">
+				  </div>
+			  </td>
+		  </tr>
+
+		  <tr>
+			  <th><span class='red'>*</span>续卡金额</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="renewAmount" value="" placeholder="续卡金额" autocomplete="off" class="layui-input" >
+				  </div>
+			  </td>
+		  </tr>
+
+		  <tr>
+			  <th><span class='red'>*</span>实际冲抵金额</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="realOffsetAmount" value="" placeholder="实际冲抵金额" autocomplete="off" class="layui-input" >
+				  </div>
+			  </td>
+		  </tr>
+
+		  <tr>
+			  <th><span class='red'>*</span>服务技师</th>
+			  <td>
+				  <div style="width:30%">
+					  <select name="userId" lay-filter="aihao" >
+						  <!--<option value="0">默认（业务员）</option>-->
+						  <%for (user in userList) {%>
+						  <option value="${user.id}">${user.name}</option>
+						  <%}%>
+					  </select>
+				  </div>
+			  </td>
+		  </tr>
+
+		  <tr>
+			  <th><span class='red'>*</span>备注说明</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="memo" value="" placeholder="备注说明" autocomplete="off" class="layui-input">
+				  </div>
+			  </td>
+		  </tr>
+
+		  <tr>
+			  <th><span class='red'>*</span>支付方式</th>
+			  <td>
+				  <div style="width:30%">
+					  <select name="payTypeCode" lay-filter="aihao" >
+						  <option value="zhifubao">支付宝</option>
+						  <option value="weixin">微信</option>
+						  <option value="pos">pos机刷卡</option>
+						  <option value="tuangou">团购</option>
+						  <option value="cash">现金</option>
+						  <option value="other">其他</option>
+					  </select>
+				  </div>
+			  </td>
+		  </tr>
+
+		  </tbody>
+		</table>
+		<div style="margin-left: 145px; margin-bottom: 15px;">	
+			<div class="layui-btn" id="adminBut" style=" min-width: 150px;">提 交</div>
+		</div>
+	</form>
+
+	<script type="text/javascript" src="${base}/static/layui/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+	<script type="text/javascript" src="${base}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${base}/static/js/util.js"></script>
+	<script>
+        $("#adminBut").click(function() {
+          $("#adminform").ajaxSubmit({
+                clearForm: false,
+                dataType: "JSON",
+                success: function(data) {
+                    if(data.code==200){
+                        layer.msg('续卡成功！',{time: 2000});
+                        closeThisWindowAndParentReload(1500);
+                    }else if(data.code==300){
+                        layer.msg(data.message,{time: 2000});
+                        closeThisWindowAndParentReload(1500);
+					}else{
+                        layer.msg(data.message,{time: 2000});
+					}
+                },
+                error: function(){
+                    layer.msg('续卡失败！',{time: 1000});
+				}
+        });
+        });
+		layui.use(['jquery','form','upload','layer'], function(){
+            var $ = layui.jquery
+                ,layer = layui.layer
+                ,form = layui.form();
+
+            $("#adminform").submit(function(e){
+                layui.upload({
+                    url: ''
+                    ,success: function(res){
+                        console.log(res); //上传成功返回值，必须为json格式
+                    }
+                });
+            });
+
+			layer.photos({
+			  photos: '#layer-photos-demo'
+			  ,closeBtn: 1
+			  ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+			}); 
+
+
+			// 删除操作
+		    $(document).on("click", ".del", function() {
+			    layer.open({
+			      title:"删除操作"
+				  ,content: '您确认要删除该属性产品吗？'
+				  ,btn: ['取消', '确认']
+				  ,yes: function(index, layero){
+				       layer.closeAll();
+				  }
+				  ,btn2: function(index, layero){
+				      layer.msg('删除成功！',{time: 1000});
+				  }
+				});
+			});
+		});
+	</script>
+</body>
+</html>

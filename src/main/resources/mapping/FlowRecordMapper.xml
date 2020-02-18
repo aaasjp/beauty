@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.FlowRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.FlowRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="personId" property="personid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="itemIds" property="itemIds" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="REAL" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="payType" property="payType" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="REAL" />
+    <result column="operatorId" property="operatorId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, personId, userId, itemIds, createDate, updateDate,amount,memo,payType,type,income,operatorId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from flowrecord
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from flowrecord
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zzq.beauty.model.FlowRecord" >
+    insert into flowrecord (id, personId, userId, itemIds, createDate,
+        updateDate,amount,memo,payType,type,income,operatorId
+      )
+    values (#{id,jdbcType=INTEGER}, #{personid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{itemIds,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP},
+      #{amount,jdbcType=REAL},#{memo,jdbcType=VARCHAR},#{payType,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{income,jdbcType=REAL},
+      #{operatorId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.FlowRecord" >
+    insert into flowrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="personid != null" >
+        personId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="itemIds != null" >
+        itemIds,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="payType != null" >
+        payType,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="operatorId != null" >
+        operatorId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="personid != null" >
+        #{personid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="itemIds != null" >
+        #{itemIds,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=REAL},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzq.beauty.model.FlowRecord" >
+    update flowrecord
+    <set >
+      <if test="personid != null" >
+        personId = #{personid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="itemIds != null" >
+        itemIds = #{itemIds,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        payType = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=REAL},
+      </if>
+      <if test="operatorId != null" >
+        operatorId = #{operatorId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.FlowRecord" >
+    update flowrecord
+    set personId = #{personid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      itemIds = #{itemIds,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=REAL},
+      memo = #{memo,jdbcType=VARCHAR},
+      payType = #{payType,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      income = #{income,jdbcType=REAL},
+      operatorId = #{operatorId,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="list" resultType="java.util.HashMap">
+    SELECT
+    flowrecord.id,
+    p.name AS customer,
+    (
+    SELECT
+    `name`
+    FROM
+    person
+    WHERE
+    person.id = flowrecord.userId
+    ) AS staff,
+    flowrecord.itemIds,
+    flowrecord.amount,
+    flowrecord.memo,
+    flowrecord.payType,
+    flowrecord.type,
+    flowrecord.createDate,
+    flowrecord.income,
+    (
+    SELECT
+    `name`
+    FROM
+    person
+    WHERE
+    person.id = flowrecord.operatorId
+    ) AS operator
+    FROM
+    flowrecord,
+    person AS p
+    WHERE
+    flowrecord.personId = p.id
+    AND p.`name` LIKE #{keyWord}
+      and (flowrecord.createDate &gt;=#{startDate} AND flowrecord.createDate &lt;=#{endDate})
+    ORDER BY flowrecord.createDate DESC
+  </select>
+
+  <select id="listNoPage" resultType="java.util.HashMap">
+    SELECT
+    flowrecord.id,
+    p.name AS customer,
+    (
+    SELECT
+    `name`
+    FROM
+    person
+    WHERE
+    person.id = flowrecord.userId
+    ) AS staff,
+    flowrecord.itemIds,
+    flowrecord.amount,
+    flowrecord.memo,
+    flowrecord.payType,
+    flowrecord.type,
+    flowrecord.createDate,
+    flowrecord.income,
+    (
+    SELECT
+    `name`
+    FROM
+    person
+    WHERE
+    person.id = flowrecord.operatorId
+    ) AS operator
+    FROM
+    flowrecord,
+    person AS p
+    WHERE
+    flowrecord.personId = p.id
+    AND p.`name` LIKE #{keyWord}
+    and (flowrecord.createDate &gt;=#{startDate} AND flowrecord.createDate &lt;=#{endDate})
+    ORDER BY flowrecord.createDate DESC
+  </select>
+
+  <select id="getBetweenTimeCount" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM flowrecord WHERE flowrecord.createDate &gt;=#{startDate} AND flowrecord.createDate &lt;= #{endDate}
+  </select>
+
+  <select id="getBetweenTimeAmount" resultType="java.lang.Double">
+    SELECT IFNULL(SUM(amount),0) FROM flowrecord WHERE flowrecord.createDate &gt;= #{startDate} AND flowrecord.createDate &lt;= #{endDate}
+  </select>
+
+  <select id="getBetweenTimeIncome" resultType="java.lang.Double">
+    SELECT IFNULL(SUM(income),0) FROM flowrecord WHERE flowrecord.createDate &gt;= #{startDate} AND flowrecord.createDate &lt;= #{endDate}
+  </select>
+
+  <select id="getFlowRecordBetweenTime" resultMap="BaseResultMap">
+    SELECT * FROM flowrecord WHERE flowrecord.createDate &gt;=#{startDate} AND flowrecord.createDate &lt;= #{endDate}
+  </select>
+</mapper>

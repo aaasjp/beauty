@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.Goods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="goodsTypeId" property="goodstypeid" jdbcType="INTEGER" />
+    <result column="goodsTypeName" property="goodstypename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, num, price,description,state,createDate, updateDate,goodsTypeId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zzq.beauty.model.Goods" >
+    insert into goods (id, name, num,
+      price,description, createDate, updateDate,state,goodsTypeId
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER},
+      #{price,jdbcType=REAL}, #{description,jdbcType=VARCHAR},#{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP},
+      #{state,jdbcType=INTEGER},#{goodstypeid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="goodstypeid != null" >
+        goodsTypeId= #{goodstypeid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzq.beauty.model.Goods" >
+    update goods
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state= #{state,jdbcType=INTEGER},
+      </if>
+      <if test="goodstypeid != null" >
+        goodsTypeId= #{goodstypeid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.Goods" >
+    update goods
+    set name = #{name,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL},
+      description = #{description,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      state= #{state,jdbcType=INTEGER},
+      goodsTypeId= #{goodstypeid,jdbcType=INTEGER},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="goodsList" resultMap="BaseResultMap" >
+    select goods.*,goodsType.name as goodsTypeName from goods,goodsType where 1=1 and goods.name like #{keyWord} and goods.state=1
+    and goods.goodsTypeId=goodsType.id
+    <if test="where != null">
+      ${where}
+    </if>
+    order by goods.goodsTypeId ASC,goods.name ASC
+  </select>
+  
+  <select id="dropOffGoodsList"  resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from goods where 1=1 and name like #{keyWord} and state=0 order by createDate DESC
+  </select>
+
+  <update id="reduceInventory">
+        update goods set num=num-#{num} where id=#{id}
+  </update>
+</mapper>

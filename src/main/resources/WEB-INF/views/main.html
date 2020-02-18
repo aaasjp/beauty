@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+    <!-- 布局容器 -->
+    <div class="layui-layout layui-layout-admin">
+        <!-- 头部 -->
+        <div class="layui-header">
+            <div class="layui-main">
+				<div class="top-left">
+					<!-- logo -->
+					<a href="javascript:;" class="logo">管理平台</a>
+					<a href="javascript:;" class="menu-flexible ml10">
+						<!--<i class="layui-icon">&#xe635;</i> -->
+					</a>
+				</div>
+                <!-- 头部右侧操作 -->
+                <ul class="layui-nav operate">
+                    <li class="layui-nav-item"> 
+                        <!-- 进入商城首页    -->
+                        <a href="javascript:;">后台首页</a>
+                    </li>
+                    <!--<li class="layui-nav-item">
+
+                        <a href="javascript:;" class="wap">商城WAP</a>
+                        <dl class="layui-nav-child">
+                            <dd class="p10">
+                                <img src="img/pic.png" width="150px" height="150px" alt="">
+                                <p class="tac" style="color:#333;">扫一扫进入商城WAP</p>
+                            </dd>
+                        </dl>
+                    </li>-->
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">${session.user.username}</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                            	<a href="javascript:;" class="edit-password">修改密码</a>
+                            </dd>
+                            <dd>
+                                <a href="${base}/out">退出登录</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 左侧菜单 -->
+        <div class="layui-side layui-bg-black left-menu-all ">
+            <div class="layui-side-scroll">
+            	<ul class="layui-nav layui-nav-tree left-menu" lay-filter="left-menu">
+                    <li class="layui-nav-item layui-this">
+                        <a href="javascript:;" data-url="${base}/index/main" data-id="1" style="font-size: 18px">后台首页</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">技师管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/admin/adminList" data-id="2">技师列表</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">客户管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/user/userList" data-id="4">客户列表</a>
+                            </dd>
+                            <!--<dd>
+                                <a href="javascript:;" data-url="${base}/broker/list" data-id="5">客户历史业务员</a>
+                            </dd>-->
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">产品管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/goods/goodsList" data-id="8">产品列表</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/goods/dropOffGoodsList" data-id="9">已下架产品</a>
+                            </dd>
+                            <!--<dd>
+                                <a href="javascript:;" data-url="${base}/buyGoods/buyGoodsList" data-id="10">客户购买的产品</a>
+                            </dd>-->
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">会员卡管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/vipCard/vipCardList" data-id="18">会员卡列表</a>
+                            </dd>
+
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/buyVipCard/buyVipCardList" data-id="20">客户购买的会员卡</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/vipCard/dropOffVipCardList" data-id="19">已下架会员卡</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">服务管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/careRecord/list" data-id="12">服务记录</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">消费管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/financial/sales" data-id="15">消费记录</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    
+                   <!-- <li class="layui-nav-item">
+                        <a href="javascript:;">统计查询</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="会员统计.html" data-id="20">会员统计</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="品牌查询.html" data-id="21">品牌查询</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="产品查询.html" data-id="22">产品查询</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="AGR转赠查询.html" data-id="23">AGR转赠查询</a>
+                            </dd>
+                        </dl>
+                    </li>-->
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" style="font-size: 18px">系统设置</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="${base}/sys/sys" data-id="24">系统参数设置</a>
+                            </dd>
+                          <!--  <dd>
+                                <a href="javascript:;" data-url="产品类型管理.html" data-id="25">产品类型管理</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="产品属性管理.html" data-id="26">产品属性管理</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="品牌管理.html" data-id="27">品牌管理</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="导航设计.html" data-id="28">导航设计</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="系统参数设置.html" data-id="29">系统参数设置</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="修改绑定手机.html" data-id="30">修改绑定手机</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="退货地址管理.html" data-id="31">退货地址管理</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="服务协议.html" data-id="32">服务协议</a>
+                            </dd>-->
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		
+        <!-- 主体 -->
+        <div class="layui-body">
+            <!-- 顶部切换卡 -->
+            <div class="layui-tab layui-tab-card" lay-filter="top-tab" lay-allowClose="true">
+                <ul class="layui-tab-title"></ul>
+                <div class="layui-tab-button">
+                	<a href="javascript:;"><i class="layui-icon">&#x1002;</i></a>
+                </div>
+                <div class="layui-tab-content"></div>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <div class="layui-footer">
+             管理平台 <span class="red">*建议使用分辨率1366*768以上及高级浏览器，体验效果更佳！</span>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+    <script type="text/javascript" src="${base}/static/js/admin.js"></script>
+    <script>
+        layui.use(['jquery','form','layer'], function(){
+            var $ = layui.jquery,
+                layer = layui.layer,
+                laypage = layui.laypage;
+
+            // 修改密码
+            $(document).on("click", ".edit-password", function() {
+                layer.msg('暂未开放！',{time: 2000});
+               /* layer.open({
+                  type:2
+                  ,area:['450px', '320px']
+                  ,title:"修改密码"
+                  ,content: '修改密码.html'
+                });*/
+            });
+        });
+    </script>
+
+
+</body>
+</html>

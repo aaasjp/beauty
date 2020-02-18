@@ -1,0 +1,24 @@
+<div id="table-pages" style="text-align:center"></div>
+<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+<script>
+    // 分页
+    layui.use(['laypage','layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+    laypage({
+        cont: 'table-pages'
+        ,pages:${page.pages}
+        ,skip: true
+        ,curr:${page.pageNum}
+        ,jump:function(e,first){
+            if(!first){
+                var myform=$('.layui-form'); //得到form对象
+                var tmpInput=$("<input type='hidden' name='pageNum'/>");
+                tmpInput.attr("value", e.curr);
+                myform.append(tmpInput);
+                myform.submit();
+            }
+        }
+    });
+    });
+</script>

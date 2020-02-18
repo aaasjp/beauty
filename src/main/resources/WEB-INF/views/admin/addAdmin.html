@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+    <form class="layui-form" id="adminform" action="${base}/admin/saveAdmin">
+	    <table class="layui-table layui-table-add" lay-skin="nob">
+		  <tbody>
+		  <tr>
+			  <input type="hidden" name="personId" value="${person.id!}" />
+			  <input type="hidden" name="userId" value="${user.id!}" />
+		      <th width="100"><span class='red'>*</span>账号</th>
+		      <td>
+				  <div style="width:30%">
+				  <input type="text" name="username" value="${user.username!}" placeholder="请输入用户名" autocomplete="off" class="layui-input"></td>
+			</div>
+			</tr>
+
+		    <tr>
+		      <th><span class='red'>*</span>密码</th>
+		      <td>
+		        <div style="width:30%">
+		        	<input type="password" name="password" value="${user.password!}" placeholder="请输入要设置的密码" autocomplete="off" class="layui-input">
+		        </div>
+		      </td>
+		    </tr>
+			<tr>
+				<th><span class='red'>*</span>姓名</th>
+				<td>
+					<div style="width:30%">
+						<input type="text" name="name" value="${person.name!}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+					</div>
+				</td>
+			</tr>
+		    <tr>
+		      <th><span class='red'>*</span>性别</th>
+		      <td>
+		        <div style="width: 30%;">
+		        	<select lay-verify="" name="sex">
+					  <option value="女" <%if(person.sex! =="女"){%> selected="selected" <%}%> >女</option>
+					  <option value="男" <%if(person.sex! =="男"){%> selected="selected" <%}%> >男</option>
+					</select>  
+		        </div>
+		      </td>
+		    </tr>
+			<tr>
+				<th><span class='red'>*</span>生日</th>
+				<td>
+					<div style="width:30%">
+						<input type="text" name="birthday" value="${person.birthday!}" placeholder="请输入生日" autocomplete="off" class="layui-input">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th><span class='red'>*</span>联系方式</th>
+				<td>
+					<div style="width:30%">
+						<input type="text" name="phone" value="${person.phone!}" placeholder="请输入联系方式" autocomplete="off" class="layui-input">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th><span class='red'>*</span>家庭住址</th>
+				<td>
+					<div style="width:30%">
+						<input type="text" name="address" value="${person.address!}" placeholder="请输入家庭住址" autocomplete="off" class="layui-input">
+					</div>
+				</td>
+			</tr>
+		  </tbody>
+		</table>
+		<div style="margin-left: 145px; margin-bottom: 15px;">	
+			<div class="layui-btn" id="adminBut" style=" min-width: 150px;">提 交</div>
+		</div>
+	</form>
+
+	<script type="text/javascript" src="${base}/static/layui/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+	<script type="text/javascript" src="${base}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${base}/static/js/util.js"></script>
+	<script>
+
+
+        $("#adminBut").click(function() {
+
+            //
+
+
+
+
+          $("#adminform").ajaxSubmit({
+                clearForm: false,
+                dataType: "JSON",
+                success: function(data) {
+                    if(data.code==200){
+                        layer.msg('添加成功！',{time: 2000});
+                        closeThisWindowAndParentReload(1500);
+                    }else if(data.code==300){
+                        layer.msg(data.message,{time: 2000});
+                        closeThisWindowAndParentReload(1500);
+					}else{
+                        layer.msg(data.message,{time: 2000});
+					}
+                },
+                error: function(){
+                    layer.msg('操作失败！',{time: 1000});
+				}
+        });
+        });
+		layui.use(['jquery','form','upload','layer'], function(){
+            var $ = layui.jquery
+                ,layer = layui.layer
+                ,form = layui.form();
+
+            $("#adminform").submit(function(e){
+                layui.upload({
+                    url: ''
+                    ,success: function(res){
+                        console.log(res); //上传成功返回值，必须为json格式
+                    }
+                });
+            });
+
+			layer.photos({
+			  photos: '#layer-photos-demo'
+			  ,closeBtn: 1
+			  ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+			}); 
+
+
+			// 删除操作
+		    $(document).on("click", ".del", function() {
+			    layer.open({
+			      title:"删除操作"
+				  ,content: '您确认要删除该属性商品吗？'
+				  ,btn: ['取消', '确认']
+				  ,yes: function(index, layero){
+				       layer.closeAll();
+				  }
+				  ,btn2: function(index, layero){
+				      layer.msg('删除成功！',{time: 1000});
+				  }
+				});
+			});
+		});
+	</script>
+</body>
+</html>

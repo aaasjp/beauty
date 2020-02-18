@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzq.beauty.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zzq.beauty.model.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="lastLoginDate" property="lastlogindate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, state, createDate, lastLoginDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zzq.beauty.model.User" useGeneratedKeys="true" keyProperty="id">
+    insert into user (id, username, password, 
+      state, createDate, lastLoginDate
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, #{lastlogindate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="lastlogindate != null" >
+        lastLoginDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlogindate != null" >
+        #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzq.beauty.model.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlogindate != null" >
+        lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getUserList" resultType="java.util.HashMap" parameterType="java.lang.String">
+    select person.id,person.userid,person.lastCareDate, user.username,person.name,person.phone,user.createdate,user.lastlogindate,user.state
+    from user,person where user.id=person.userId and type=0
+      and (user.username like #{username,jdbcType=VARCHAR} or person.name like #{username,jdbcType=VARCHAR}) order by user.createdate DESC
+
+  </select>
+  
+  <select id="isHaveUserName" resultType="java.lang.Long" parameterType="java.lang.String">
+    select count(*) from user where username=#{userName,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="freezeOrUnfreeze">
+    update user set state=#{state} where id=#{userId}
+  </update>
+</mapper>
