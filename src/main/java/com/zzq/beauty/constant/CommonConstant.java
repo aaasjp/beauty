@@ -31,6 +31,8 @@ public class CommonConstant {
             return CommonConstant.CASH_PAY_TYPE;
         } else if (payTypeCode.equals("other")) {
             return CommonConstant.OTHER_PAY_TYPE;
+        } else if (payTypeCode.equals("tuangou")) {
+            return CommonConstant.TUANGOU_PAY_TYPE;
         } else {
             return CommonConstant.VIPCARD_PAY_TYPE;
         }
